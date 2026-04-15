@@ -6,6 +6,7 @@ SRC_DIR    := src
 OBJ_DIR    := obj
 BIN_DIR    := bin
 SFML_PATH  := lib/SFML
+IMGUI_PATH := lib/imgui
 
 
 TARGET_NAME := app.exe
@@ -14,9 +15,12 @@ TARGET      := $(BIN_DIR)/$(TARGET_NAME)
 
 SOURCES       := $(wildcard $(SRC_DIR)/*.cpp)
 OBJECTS       := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SOURCES))
+IMGUI_SOURCES := $(wildcard $(IMGUI_PATH)/*.cpp)
+IMGUI_OBJECTS := $(patsubst $(IMGUI_PATH)/%.cpp, $(OBJ_DIR)/%.o, $(IMGUI_SOURCES))
+ALL_OBJECTS   := $(OBJECTS) $(IMGUI_OBJECTS)
 
 
-INCLUDES := -Isrc -I$(SFML_PATH)/include
+INCLUDES := -Isrc -I$(SFML_PATH)/include -I$(IMGUI_PATH)
 LIBS     := -L$(SFML_PATH)/lib -lsfml-graphics -lsfml-window -lsfml-system -lopengl32 -lwinmm -lgdi32
 
 
@@ -31,8 +35,8 @@ COPY_CMD = xcopy /y /i "$(call FIX_PATH,$(SFML_PATH)/bin/*.dll)" "$(call FIX_PAT
 all: $(TARGET)
 
 
-$(TARGET): $(OBJECTS) | $(BIN_DIR)
-	$(CXX) $(OBJECTS) -o $@ $(LIBS)
+$(TARGET): $(ALL_OBJECTS) | $(BIN_DIR)
+	$(CXX) $(ALL_OBJECTS) -o $@ $(LIBS)
 	@$(COPY_CMD)
 	@echo Build successful! Run: $(TARGET)
 
@@ -40,6 +44,8 @@ $(TARGET): $(OBJECTS) | $(BIN_DIR)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
+$(OBJ_DIR)/%.o: $(IMGUI_PATH)/%.cpp | $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 
 $(OBJ_DIR):

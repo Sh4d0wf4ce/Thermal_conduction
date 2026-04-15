@@ -1,0 +1,15 @@
+bin/
+obj/
+*.exe
+*.dll
+*.o
+*.a
+*.lib
+*.so
+*.dylib
+
+.DS_Store
+Thumbs.db
+imgui.ini
+
+.vscode/

@@ -19,3 +19,4 @@ imgui.ini
 !lib/**/*.dll
 !lib/**/*.so
 !lib/**/*.dylib
+!lib/**/*.o

@@ -5,6 +5,7 @@
 #include <array>
 #include <memory>
 #include <algorithm>
+#include <numeric>
 
 
 int getIndex(int x, int y, int width){

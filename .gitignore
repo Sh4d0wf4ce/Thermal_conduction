@@ -13,3 +13,9 @@ Thumbs.db
 imgui.ini
 
 .vscode/
+
+!lib/**/*.a
+!lib/**/*.lib
+!lib/**/*.dll
+!lib/**/*.so
+!lib/**/*.dylib
